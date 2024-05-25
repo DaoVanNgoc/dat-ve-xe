@@ -55,6 +55,18 @@ export default function Header() {
 					</span>
 				</a>
 			</Menu.Item>
+			<Menu.Item key="3">
+				<a
+					onClick={() => {
+						history.push("/admin");
+					}}
+				>
+					<span>
+						<img src="https://storage.googleapis.com/fe-production/images/review.svg" width={16} height={16} alt className="mr-2" />
+						<span style={{fontSize: 12}}>Admin site</span>
+					</span>
+				</a>
+			</Menu.Item>
 			<Menu.Item key="4">
 				<a
 					onClick={() => {
