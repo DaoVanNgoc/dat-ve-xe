@@ -1,21 +1,28 @@
-import React, {useState} from "react";
-import {Button, Modal, Menu, Dropdown, message, Space, Tooltip, Popover} from "antd";
-import {UserOutlined, DownOutlined} from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
+import { Button, Modal, Menu, Dropdown, message, Space, Tooltip, Popover } from "antd";
+import { UserOutlined, DownOutlined } from "@ant-design/icons";
 import _ from "lodash";
 import "../../Sass/css/Header.css";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
-import {useSelector} from "react-redux";
-import {TOKEN, USER_LOGIN} from "../../util/settings/config";
+import { useSelector } from "react-redux";
+import { TOKEN, USER_LOGIN } from "../../util/settings/config";
 import MessengerCustomerChat from "react-messenger-customer-chat";
-import {MessengerChat} from "react-messenger-chat-plugin";
+import { MessengerChat } from "react-messenger-chat-plugin";
 
-import {history} from "../../App";
+import { history } from "../../App";
 
 export default function Header() {
-	const {userLogin} = useSelector((state) => state.userReducer);
+	const { userLogin } = useSelector((state) => state.userReducer);
 	const [modal, setModal] = useState(false);
 	const [toggle, setToggle] = useState(true);
+	const [type, setType] = useState({})
+
+	useEffect(()=>{
+		setType(JSON.parse(localStorage.getItem(USER_LOGIN)))
+	},[JSON.parse(localStorage.getItem(USER_LOGIN))])
+
+	
 	const menu = (
 		<Menu>
 			<Menu.Item key="1">
@@ -26,7 +33,7 @@ export default function Header() {
 				>
 					<span>
 						<img src="https://storage.googleapis.com/fe-production/images/Auth/account-circle.svg" width={16} height={16} alt className="mr-2" />
-						<span style={{fontSize: 12}}>Thông tin tài khoản</span>
+						<span style={{ fontSize: 12 }}>Thông tin tài khoản</span>
 					</span>
 				</a>
 			</Menu.Item>
@@ -39,7 +46,7 @@ export default function Header() {
 					<span>
 						<img src="https://storage.googleapis.com/fe-production/images/ticket.svg" width={16} height={16} alt className="mr-2" />
 
-						<span style={{fontSize: 12}}>Vé của tôi</span>
+						<span style={{ fontSize: 12 }}>Vé của tôi</span>
 					</span>
 				</a>
 			</Menu.Item>
@@ -51,11 +58,13 @@ export default function Header() {
 				>
 					<span>
 						<img src="https://storage.googleapis.com/fe-production/images/review.svg" width={16} height={16} alt className="mr-2" />
-						<span style={{fontSize: 12}}>Nhận xét của tôi</span>
+						<span style={{ fontSize: 12 }}>Nhận xét của tôi</span>
 					</span>
 				</a>
 			</Menu.Item>
-			<Menu.Item key="3">
+
+			{type?.type==="ADMIN"&&(
+				<Menu.Item key="4">
 				<a
 					onClick={() => {
 						history.push("/admin");
@@ -63,11 +72,13 @@ export default function Header() {
 				>
 					<span>
 						<img src="https://storage.googleapis.com/fe-production/images/review.svg" width={16} height={16} alt className="mr-2" />
-						<span style={{fontSize: 12}}>Admin site</span>
+						<span style={{ fontSize: 12 }}>admin site</span>
 					</span>
 				</a>
 			</Menu.Item>
-			<Menu.Item key="4">
+			)}
+
+			<Menu.Item key="5">
 				<a
 					onClick={() => {
 						localStorage.removeItem(USER_LOGIN);
@@ -77,7 +88,7 @@ export default function Header() {
 				>
 					<span>
 						<img src="https://storage.googleapis.com/fe-production/images/Auth/logout.svg" width={16} height={16} alt className="mr-2" />
-						<span style={{fontSize: 12}}>Đăng xuất</span>
+						<span style={{ fontSize: 12 }}>Đăng xuất</span>
 					</span>
 				</a>
 			</Menu.Item>
@@ -113,7 +124,7 @@ export default function Header() {
 									history.push("/");
 								}}
 							>
-								<img src="./images/logovexe.jpg" alt="Logo" className="mb-5" style={{width: "100px", height: "50px", paddingTop: "20px"}} />
+								<img src="./images/logovexe.jpg" alt="Logo" className="mb-5" style={{ width: "100px", height: "50px", paddingTop: "20px" }} />
 							</a>
 						</div>
 					</div>
